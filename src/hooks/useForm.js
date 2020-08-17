@@ -12,10 +12,22 @@ function useForm(initValue){
   }
 
   function handleChange(infosDoEvento) {
-    setValue(
-      infosDoEvento.target.getAttribute('name'),
-      infosDoEvento.target.value,
-    );
+    console.log(infosDoEvento.target)
+    console.log("checked",infosDoEvento.target.checked)
+    console.log("value",infosDoEvento.target.value);
+    console.log("name",infosDoEvento.target.name);
+    if(infosDoEvento.target.value){
+      setValue(
+        infosDoEvento.target.name,
+        infosDoEvento.target.value
+        )
+    }else{
+      console.log("checkbox");
+      setValue(
+        infosDoEvento.target.name,
+        infosDoEvento.target.checked
+      )
+    }
   }
   function clearForm() {
     setFields(initValue);
@@ -27,7 +39,7 @@ function useForm(initValue){
       if(rules){
         switch(true){
           case rules.indexOf('required') > -1:
-            if(val.value == ''){
+            if(!val.value || val.value == ''){
               console.log("key", key, "val", val);
               val.error = true;
               valid = false;

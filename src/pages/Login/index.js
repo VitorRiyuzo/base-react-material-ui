@@ -3,7 +3,9 @@ import {Button, Container,TextField
 } from '@material-ui/core';
 import{View}from './styles';
 import useForm from '../../hooks/useForm';
+import {useHistory} from 'react-router-dom'
 function Login() {
+  const history = useHistory();
   const form = {
     email:{
       value:'',
@@ -16,13 +18,11 @@ function Login() {
       errorMessage:"Senha Obrigatória"
     },
   };
-  const{handleChange, fields, clearForm, validateForm} = useForm(form)
+  const{handleChange, fields, validateForm} = useForm(form)
   const login =(event)=>{
     event.preventDefault();
     if(validateForm()){
-      alert("válido")
-    }else{
-      alert("inválido")
+      history.push('/');
     }
   }
   return(
@@ -33,12 +33,14 @@ function Login() {
         justify="center"
         alignItems="center"
       >
-        <form noValidate autoComplete="off" onSubmit={login}>
+        <form  autoComplete="off" onSubmit={login}>
           <TextField 
           label="E-mail"
           fullWidth
           margin="dense"
           name="email"
+          type="email"
+          autoComplete="off"
           value={fields.email.value}
           onChange={handleChange}
           error={fields.email.error}
@@ -48,6 +50,8 @@ function Login() {
           label="Senha"
           name="password"
           fullWidth
+          type="password"
+          autoComplete="off"
           value={fields.password.value}
           onChange={handleChange}
           error={fields.password.error}
